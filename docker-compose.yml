@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   parkour-web:
-    restart: always
+#    restart: always
     image: dockerparkour_parkour-web:latest
     container_name: parkour-web
     build: ./web
@@ -15,11 +15,13 @@ services:
       # or explictly with docker-compose --file my.env ...
       - ./parkour.env
     volumes:
-      - usr_src_app_media:/usr/src/app/media
-      - usr_src_app_staticfiles:/usr/src/app/staticfiles
+      - /home/tycho/test/volumes/app:/usr/src/app
+#      - usr_src_app_media:/usr/src/app/media
+#      - usr_src_app_staticfiles:/usr/src/app/staticfiles
     links:
       - parkour-postgres:postgres
-    command: /usr/local/bin/gunicorn wui.wsgi:application -w 2 -b :8000
+#    command: bash -c "cat /usr/src/app/requirements/prod.txt && echo something_went_worked"
+    command: bash -c "pip install -r /usr/src/app/requirements/prod.txt && /usr/local/bin/gunicorn wui.wsgi:application -w 2 -b :8000"
 
   parkour-nginx:
     restart: always
@@ -27,7 +29,7 @@ services:
     container_name: parkour-nginx
     build: ./nginx
     ports:
-      - 80:80         # expose ports - HOST:CONTAINER
+      - 3838:80         # expose ports - HOST:CONTAINER
     volumes_from:
       - parkour-web
     links:

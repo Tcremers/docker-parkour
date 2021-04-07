@@ -7,5 +7,5 @@ ENV TERM xterm
 WORKDIR /usr/src/app
 
 # Download app and install requirements
-RUN git clone -b stable https://github.com/maxplanck-ie/parkour.git .
-RUN pip install -r requirements/prod.txt
+#RUN git clone -b stable https://github.com/maxplanck-ie/parkour.git .
+#RUN pip install -r requirements/prod.txt
